@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user.model';
+import User from '../models/user.model';
 import bcryptjs from 'bcryptjs';
 import { generateVerificationCode } from '../utils/generateVerificationCode';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie';
+import mongoose from 'mongoose';
 
 export const signup = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
@@ -24,7 +25,7 @@ export const signup = async (req: Request, res: Response) => {
       password: hashedPassword,
       name,
       verificationToken: verificationToken,
-      vertificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
+      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
     });
     await user.save();
 
@@ -34,7 +35,7 @@ export const signup = async (req: Request, res: Response) => {
       success: true,
       message: 'User created successfully',
       user: {
-        ...user._doc,
+        ...user.toObject(),
         password: undefined,
       },
     });

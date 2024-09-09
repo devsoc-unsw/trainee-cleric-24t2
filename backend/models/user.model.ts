@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Schema, Types } from 'mongoose';
 
-export interface UserDocument extends mongoose.Document {
+export interface UserDocument extends Document {
   email: {
     type: String;
     required: Boolean;
@@ -24,7 +24,8 @@ export interface UserDocument extends mongoose.Document {
   resetPasswordToken: String;
   resetPasswordExpiresAt: Date;
   verificationToken: String;
-  vertificationTokenExpiresAt: Date;
+  verificationTokenExpiresAt: Date;
+  _id: Types.ObjectId; // i dont know why hthis fixed it
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -50,13 +51,20 @@ const userSchema = new Schema<UserDocument>(
       type: Boolean,
       default: false,
     },
-    resetPasswordToken: String,
-    resetPasswordExpiresAt: Date,
-    verificationToken: String,
-    vertificationTokenExpiresAt: Date,
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpiresAt: {
+      type: Date,
+    },
+    verificationToken: {
+      type: String,
+    },
+    verificationTokenExpiresAt: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );
 
-export interface UserModel extends mongoose.Model<UserDocument> {}
-export default mongoose.model<UserDocument, UserModel>('User', userSchema);
+export default mongoose.model<UserDocument>('User', userSchema);
