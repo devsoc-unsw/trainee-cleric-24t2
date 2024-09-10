@@ -3,7 +3,7 @@ import User from '../models/user.model';
 import bcryptjs from 'bcryptjs';
 import { generateVerificationCode } from '../utils/generateVerificationCode';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie';
-import mongoose from 'mongoose';
+import { sendVerificationEmail } from '../mailtrap/emails';
 
 export const signup = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
@@ -30,6 +30,8 @@ export const signup = async (req: Request, res: Response) => {
     await user.save();
 
     generateTokenAndSetCookie(res, user._id);
+
+    await sendVerificationEmail(user.email.toString(), verificationToken);
 
     res.status(201).json({
       success: true,
