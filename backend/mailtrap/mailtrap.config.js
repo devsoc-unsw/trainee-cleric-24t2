@@ -1,11 +1,17 @@
 import { MailtrapClient } from "mailtrap"
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: "../.env"
+})
 
 /**
  * For this example to work, you need to set up a sending domain,
  * and obtain a token that is authorized to send from the domain.
  */
 
-const TOKEN = "bf97c2fa385ac51b6e37bbd6284841ac";
+const TOKEN = process.env.MAILTRAP_TOKEN;
+// console.log("TOKEN: ", TOKEN);
 const SENDER_EMAIL = "mailtrap@demomailtrap.com";
 const RECIPIENT_EMAIL = "leokhantzarni@gmail.com";
 
