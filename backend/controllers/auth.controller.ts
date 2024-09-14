@@ -221,3 +221,24 @@ export const resetPassword = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const checkAuth = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.userId).select('-password');
+    console.log('user', user);
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log('Error in checkAuth', error);
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+};

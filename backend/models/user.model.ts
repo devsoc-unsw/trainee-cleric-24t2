@@ -81,4 +81,8 @@ const userSchema = new Schema<UserDocument>(
   { timestamps: true }
 );
 
+export interface JwtPayload {
+  userId: string;
+}
+
 export default mongoose.model<UserDocument>('User', userSchema);
