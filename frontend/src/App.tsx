@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from './Components/Navbar';
 import FeatureSection from './Components/FeatureSection';
 import HeroSection from './Components/HeroSection';
@@ -7,19 +6,26 @@ import { Route, Routes } from 'react-router-dom';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 
-function App() {
+function HomePage() {
   return (
     <>
     <Navbar/>
     <HeroSection/>
     <FeatureSection/>
     <Workflow/>
-    <Routes>
-      <Route path="/" element = {""}/>
-      <Route path = "/signup" element={<SignUpPage/>} />
-      <Route path = "/login" element = {<LoginPage/>} />
-    </Routes>
     </>
+  ) 
+}
+
+function App() {
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element = {<HomePage/>}/>
+        <Route path = "/signup" element={<SignUpPage/>} />
+        <Route path = "/login" element = {<LoginPage/>} />
+      </Routes>
+    </div>
   );
 }
 
